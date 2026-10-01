@@ -542,6 +542,21 @@ input[type="search"] {
 .card-actions {
   display: flex;
   flex-shrink: 0;
+  gap: 8px;
+}
+
+body.is-share .hero,
+body.is-share .catalog-head {
+  display: none;
+}
+
+body.is-share .catalog {
+  margin-top: 28px;
+}
+
+body.is-share .grid {
+  grid-template-columns: minmax(0, 720px);
+  justify-content: center;
 }
 
 .ghost {

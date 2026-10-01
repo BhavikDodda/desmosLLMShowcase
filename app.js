@@ -10,6 +10,7 @@ const state = {
   graphs: [],
   author: "All",
   query: "",
+  share: "",
 };
 
 search.addEventListener("input", () => {
@@ -43,6 +44,35 @@ function promptOf(graph) {
 function minutesOf(graph) {
   const n = Number(graph.minutes);
   return Number.isFinite(n) ? n : 2;
+}
+
+function calculatorHash(url) {
+  if (!url) return "";
+  try {
+    const parsed = new URL(url, location.origin);
+    const match = parsed.pathname.match(/\/calculator\/([a-z0-9]+)\/?$/i);
+    if (match) return match[1].toLowerCase();
+  } catch {
+    /* plain hash */
+  }
+  const plain = String(url).trim().match(/^[a-z0-9]+$/i);
+  return plain ? plain[0].toLowerCase() : "";
+}
+
+function shareParam() {
+  const raw = new URLSearchParams(location.search).get("hash");
+  if (!raw || !raw.trim()) return "";
+  return calculatorHash(raw) || raw.trim().toLowerCase();
+}
+
+function shareHref(graph) {
+  const id = calculatorHash(graph.url);
+  if (!id) return "";
+  const url = new URL(location.href);
+  url.search = "";
+  url.hash = "";
+  url.searchParams.set("hash", id);
+  return url.toString();
 }
 
 function desmosEmbed(url) {
@@ -139,6 +169,9 @@ function previewNode(graph) {
 }
 
 function filteredGraphs() {
+  if (state.share) {
+    return state.graphs.filter((graph) => calculatorHash(graph.url) === state.share);
+  }
   return state.graphs.filter((graph) => {
     const authorOk = state.author === "All" || graph.author === state.author;
     const haystack = [titleOf(graph), promptOf(graph), graph.author, ...followupsOf(graph)]
@@ -153,6 +186,7 @@ function renderGrid() {
   const graphs = filteredGraphs();
   grid.replaceChildren();
   empty.hidden = graphs.length > 0;
+  empty.textContent = state.share ? "No graph for that link." : "No graphs match that filter.";
   graphs.forEach((graph) => {
     const index = state.graphs.indexOf(graph);
     const card = document.createElement("article");
@@ -198,6 +232,25 @@ function renderGrid() {
 
     const actions = document.createElement("div");
     actions.className = "card-actions";
+    const shareUrl = shareHref(graph);
+    if (shareUrl) {
+      const share = document.createElement("button");
+      share.type = "button";
+      share.className = "ghost";
+      share.textContent = "Share";
+      share.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          share.textContent = "Copied";
+        } catch {
+          share.textContent = shareUrl;
+        }
+        window.setTimeout(() => {
+          share.textContent = "Share";
+        }, 1600);
+      });
+      actions.append(share);
+    }
     const open = document.createElement("button");
     open.type = "button";
     open.className = "ghost";
@@ -314,9 +367,17 @@ async function main() {
   if (!response.ok) throw new Error("Could not load data/graphs.json");
   const data = await response.json();
   state.graphs = Array.isArray(data.graphs) ? data.graphs : [];
+  state.share = shareParam();
+  if (state.share) {
+    document.body.classList.add("is-share");
+    const brand = document.querySelector(".brand");
+    if (brand) brand.href = location.pathname;
+    const shared = state.graphs.find((graph) => calculatorHash(graph.url) === state.share);
+    if (shared) document.title = `${titleOf(shared)} · DesLearn`;
+  }
   renderChips(state.graphs);
   renderGrid();
-  startReel(state.graphs);
+  if (!state.share) startReel(state.graphs);
 
   const id = location.hash.replace("#", "");
   const selected = state.graphs.find((graph) => graph.id === id);
