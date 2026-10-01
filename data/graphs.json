@@ -1,0 +1,113 @@
+{
+  "_edit": "This file is the whole gallery. Reorder objects to reorder cards. title is the graph name. prompt is the first prompt, the full idea, in the user's exact words. followups is later prompts that improved it, in order — leave [] when it shipped on the first prompt. author is who wrote the prompt. minutes is generation time. url is https://www.desmos.com/calculator/HASH — leave it empty until you have one. The card then shows https://saved-work.desmos.com/calc_thumbs/production/HASH.png and an Open link button.",
+  "graphs": [
+    {
+      "id": "elliptical-billiards",
+      "title": "Elliptical billiards",
+      "prompt": "create a billiard table that's elliptic",
+      "author": "Bhavik Dodda",
+      "minutes": 4,
+      "url": "https://www.desmos.com/calculator/0pne9l2ysm",
+      "followups": ["it would be even awesome if i could see a \"ball\" that's getting reflected rather than a plain line across","though i can change the angle of aim through the expressions panel, it would be good if i had a draggable element on the graph space itself with which i can modify the variable"]
+    },
+    {
+      "id": "random-walk",
+      "title": "Random walk",
+      "prompt": "random walk",
+      "author": "Shashank",
+      "minutes": 1,
+      "url": "https://www.desmos.com/calculator/ux6qxkkvf1",
+      "followups": []
+    },
+    {
+      "id": "lotka-volterra",
+      "title": "Lotka-Volterra phase plane",
+      "prompt": "Lotka-Volterra phase plane",
+      "author": "Bhavik Dodda",
+      "minutes": 2,
+      "url": "https://www.desmos.com/calculator/vkrdndcfr6",
+      "followups": []
+    },
+    {
+      "id": "pong",
+      "title": "Pong",
+      "prompt": "make pong game",
+      "author": "Bhavik Dodda",
+      "minutes": 3,
+      "url": "https://www.desmos.com/calculator/34einhfpnr",
+      "followups": []
+    },
+    {
+      "id": "triple-pendulum",
+      "title": "Triple pendulum",
+      "prompt": "triple pendulum with 'history' of the pendulum displayed (trail)",
+      "author": "Bhavik Dodda",
+      "minutes": 2,
+      "url": "https://www.desmos.com/calculator/y45u3swfoa",
+      "followups": []
+    },
+    {
+      "id": "three-balls",
+      "title": "Three balls in a box",
+      "prompt": "3 balls colliding in a box",
+      "author": "Bhavik Dodda",
+      "minutes": 2,
+      "url": "https://www.desmos.com/calculator/hapn9tfltd",
+      "followups": []
+    },
+    {
+      "id": "three-body",
+      "title": "Three-body gravity",
+      "prompt": "3 unequal mass celestial bodies with gravity",
+      "author": "Bhavik Dodda",
+      "minutes": 2,
+      "url": "https://www.desmos.com/calculator/90tucakc0c",
+      "followups": []
+    },
+    {
+      "id": "earth-pangea",
+      "title": "3D Earth Pangea dinosaurs",
+      "prompt": "3d earth with pangea and dinosaurs",
+      "author": "Bhavik Dodda",
+      "minutes": 4,
+      "url": "https://www.desmos.com/calculator/u9b1v0f9pf",
+      "followups": ["dino disappeared","add occlusion"]
+    },
+    {
+      "id": "three-polyhedra",
+      "title": "Three polyhedra rotating",
+      "prompt": "display any 3 random polyhedra",
+      "author": "Bhavik Dodda",
+      "minutes": 2,
+      "url": "https://www.desmos.com/calculator/7btlrxmwvb",
+      "followups": []
+    },
+    {
+      "id": "tetris",
+      "title": "Tetris",
+      "prompt": "tetris with controls",
+      "author": "Bhavik Dodda",
+      "minutes": 5,
+      "url": "https://www.desmos.com/calculator/oeimr3sjip",
+      "followups": []
+    },
+    {
+      "id": "two-pendulums",
+      "title": "Two equal pendulums",
+      "prompt": "2 pendulums with same length colliding against each other",
+      "author": "Bhavik Dodda",
+      "minutes": 2,
+      "url": "https://www.desmos.com/calculator/9xnj3ngq5k",
+      "followups": []
+    },
+    {
+      "id": "tic-tac-toe",
+      "title": "Tic-tac-toe",
+      "prompt": "idea: tic tac toe",
+      "author": "Bhavik Dodda",
+      "minutes": 3,
+      "url": "https://www.desmos.com/calculator/f0o0t1vmxd",
+      "followups": []
+    }
+  ]
+}

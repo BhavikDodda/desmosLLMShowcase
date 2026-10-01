@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DesLearn: desmos pipeline</title>
+    <meta
+      name="description"
+      content="Desmos graphs built from a one-line prompt. Most took 1 try and about 2 minutes. Send an idea and it can be the next card."
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,520;9..144,640&family=Outfit:wght@380;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top">DesLearn</a>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <p class="eyebrow">Desmos graph pipeline</p>
+        <h1>One line becomes a graph.</h1>
+        <div class="hero-row">
+          <p class="lede" id="lede">
+            Each card is a playable Desmos graph built from a short prompt. A usual
+            run is <mark>1 try</mark> and about <mark>2 minutes</mark>, and it's done!<br><br> Send a prompt and it can be the next card.
+          </p>
+          <div class="reel" aria-live="polite">
+            <p class="reel-label">prompts</p>
+            <div class="reel-window">
+              <p class="reel-line" id="reel-line"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="catalog" aria-labelledby="catalog-title">
+        <div class="catalog-head">
+          <h2 id="catalog-title">Graphs</h2>
+          <div class="controls">
+            <label class="sr-only" for="search">Search graphs</label>
+            <input id="search" type="search" placeholder="Search prompts" autocomplete="off" />
+            <div class="chips" id="chips" role="group" aria-label="Filter by author"></div>
+          </div>
+        </div>
+        <div class="grid" id="grid"></div>
+        <p class="empty" id="empty" hidden>No graphs match that filter.</p>
+      </section>
+    </main>
+
+    <footer>created with ❤️ by Bhavik Dodda</footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
