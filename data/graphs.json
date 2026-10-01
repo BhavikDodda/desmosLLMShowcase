@@ -108,6 +108,15 @@
       "minutes": 3,
       "url": "https://www.desmos.com/calculator/f0o0t1vmxd",
       "followups": []
+    },
+    {
+      "id": "elliptic-curve-addition",
+      "title": "Elliptic curve addition",
+      "prompt": "Elliptic curve doing additions",
+      "author": "Maharshee Shah",
+      "minutes": 4,
+      "url": "https://www.desmos.com/calculator/audtmpucik",
+      "followups": []
     }
   ]
 }
