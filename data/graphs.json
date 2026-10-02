@@ -117,6 +117,78 @@
       "minutes": 4,
       "url": "https://www.desmos.com/calculator/audtmpucik",
       "followups": []
+    },
+    {
+      "id": "birthday-card",
+      "title": "Birthday card",
+      "prompt": "a nice bday card",
+      "author": "Anonymous",
+      "minutes": 1.5,
+      "url": "https://www.desmos.com/calculator/deg7hhvctv",
+      "followups": []
+    },
+    {
+      "id": "spring-pendulum",
+      "title": "Spring pendulum",
+      "prompt": "pendulum with a spring, instead of a string",
+      "author": "Shashank",
+      "minutes": 2.5,
+      "url": "https://www.desmos.com/calculator/7lxwvz6igm",
+      "followups": []
+    },
+    {
+      "id": "spring-pendulum-2",
+      "title": "Spring pendulum 2",
+      "prompt": "to a pendulum on a string, attach another pendulum but with a spring",
+      "author": "Shashank",
+      "minutes": 2,
+      "url": "https://www.desmos.com/calculator/5ptugyynnn",
+      "followups": []
+    },
+    {
+      "id": "spring-pendulum-3",
+      "title": "Spring pendulum 3",
+      "prompt": "alternate between a string pendulum attached to a spring pendulum to a string pendulum",
+      "author": "Shashank",
+      "minutes": 2.5,
+      "url": "https://www.desmos.com/calculator/g7cl5wtxo0",
+      "followups": []
+    },
+    {
+      "id": "minecraft-3d",
+      "title": "Minecraft 3D",
+      "prompt": "static block from minecraft",
+      "author": "Anonymous",
+      "minutes": 4,
+      "url": "https://www.desmos.com/calculator/t3d4ahet7l",
+      "followups": []
+    },
+    {
+      "id": "ball-on-mobius",
+      "title": "Ball on Möbius",
+      "prompt": "ball moving on mobius strip",
+      "author": "Shiva",
+      "minutes": 1,
+      "url": "https://www.desmos.com/calculator/z9wpuis6hj",
+      "followups": []
+    },
+    {
+      "id": "water-in-klein-bottle",
+      "title": "Water in Klein bottle",
+      "prompt": "Infinite water through 4d klein. Ottle projected in 2d plane something",
+      "author": "Maharshee Shah",
+      "minutes": 1,
+      "url": "https://www.desmos.com/calculator/lwpasj1eua",
+      "followups": []
+    },
+    {
+      "id": "su2-double-cover-so3",
+      "title": "SU(2) double cover SO(3)",
+      "prompt": "visualise how rotations of SU(2) is double cover SO(3)",
+      "author": "Shiva",
+      "minutes": 4,
+      "url": "https://www.desmos.com/calculator/apmwepbjj9",
+      "followups": []
     }
   ]
 }
