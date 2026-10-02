@@ -5,6 +5,9 @@ const search = document.querySelector("#search");
 const dialog = document.querySelector("#graph-dialog");
 const dialogClose = document.querySelector("#dialog-close");
 const reelLine = document.querySelector("#reel-line");
+const reelScroll = document.querySelector("#reel-scroll");
+const reelScrollTrack = document.querySelector("#reel-scroll-track");
+const reelScrollThumb = document.querySelector("#reel-scroll-thumb");
 
 const state = {
   graphs: [],
@@ -46,6 +49,19 @@ function minutesOf(graph) {
   return Number.isFinite(n) ? n : 2;
 }
 
+function averageMinutesLabel(graphs) {
+  if (!graphs.length) return "2 minutes";
+  const avg = graphs.reduce((sum, graph) => sum + minutesOf(graph), 0) / graphs.length;
+  const rounded = Math.round(avg * 10) / 10;
+  const text = Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+  return `${text} minutes`;
+}
+
+function updateAverageMinutes(graphs) {
+  const mark = document.querySelector("#avg-minutes");
+  if (mark) mark.textContent = averageMinutesLabel(graphs);
+}
+
 function calculatorHash(url) {
   if (!url) return "";
   try {
@@ -63,6 +79,28 @@ function shareParam() {
   const raw = new URLSearchParams(location.search).get("hash");
   if (!raw || !raw.trim()) return "";
   return calculatorHash(raw) || raw.trim().toLowerCase();
+}
+
+function userParam() {
+  const raw = new URLSearchParams(location.search).get("user");
+  if (!raw || !raw.trim()) return "";
+  return raw.trim();
+}
+
+function resolveAuthor(graphs, name) {
+  const needle = String(name || "")
+    .trim()
+    .toLowerCase();
+  if (!needle) return "All";
+  const authors = [...new Set(graphs.map((graph) => graph.author || "Unknown"))];
+  return authors.find((author) => author.toLowerCase() === needle) || name.trim();
+}
+
+function setUserQuery(author) {
+  const url = new URL(location.href);
+  if (!author || author === "All") url.searchParams.delete("user");
+  else url.searchParams.set("user", author);
+  history.replaceState(null, "", url.pathname + url.search + url.hash);
 }
 
 function shareHref(graph) {
@@ -108,6 +146,7 @@ function renderChips(graphs) {
     button.setAttribute("aria-pressed", String(author === state.author));
     button.addEventListener("click", () => {
       state.author = author;
+      setUserQuery(author);
       renderChips(graphs);
       renderGrid();
     });
@@ -173,7 +212,9 @@ function filteredGraphs() {
     return state.graphs.filter((graph) => calculatorHash(graph.url) === state.share);
   }
   return state.graphs.filter((graph) => {
-    const authorOk = state.author === "All" || graph.author === state.author;
+    const authorOk =
+      state.author === "All" ||
+      (graph.author || "Unknown").toLowerCase() === state.author.toLowerCase();
     const haystack = [titleOf(graph), promptOf(graph), graph.author, ...followupsOf(graph)]
       .join(" ")
       .toLowerCase();
@@ -280,41 +321,188 @@ function renderGrid() {
   });
 }
 
+function jumpToGraph(graph) {
+  if (!graph?.id) return;
+  let changed = false;
+  if (state.author !== "All") {
+    state.author = "All";
+    setUserQuery("All");
+    changed = true;
+  }
+  if (state.query) {
+    state.query = "";
+    if (search) search.value = "";
+    changed = true;
+  }
+  if (changed) {
+    renderChips(state.graphs);
+    renderGrid();
+  }
+  const card = document.getElementById(graph.id);
+  if (!card) return;
+  card.scrollIntoView({ behavior: "smooth", block: "center" });
+  card.classList.add("is-flash");
+  window.setTimeout(() => card.classList.remove("is-flash"), 1200);
+}
+
 function showReelLine(text) {
   reelLine.textContent = text;
-  const len = text.length;
   reelLine.style.fontSize =
-    len > 120 ? "0.62em" : len > 70 ? "0.72em" : len > 42 ? "0.84em" : "1em";
+    text.length > 120 ? "0.62em" : text.length > 70 ? "0.72em" : text.length > 42 ? "0.84em" : "1em";
 }
 
 function startReel(graphs) {
   if (!reelLine) return;
-  const prompts = graphs.map((graph) => promptOf(graph)).filter(Boolean);
+  const entries = graphs.filter((graph) => promptOf(graph));
+  const prompts = entries.map((graph) => promptOf(graph));
   if (!prompts.length) {
     reelLine.textContent = "";
+    reelLine.removeAttribute("role");
+    reelLine.removeAttribute("tabindex");
+    if (reelScroll) reelScroll.hidden = true;
     return;
   }
+
   let index = 0;
-  showReelLine(prompts[0]);
-  if (prompts.length < 2) return;
+  let animating = false;
+  let scrubbing = false;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  window.setInterval(() => {
-    if (reduced) {
-      index = (index + 1) % prompts.length;
+  const maxIndex = prompts.length - 1;
+  const reelWindow = document.querySelector("#reel-window");
+
+  reelLine.setAttribute("role", "link");
+  reelLine.tabIndex = 0;
+  reelLine.title = "Go to graph";
+  reelLine.classList.add("is-clickable");
+
+  const syncScroll = () => {
+    if (!reelScroll || !reelScrollTrack || !reelScrollThumb || maxIndex < 1) return;
+    const track = reelScrollTrack.clientHeight;
+    const thumb = Math.max(18, track / prompts.length);
+    const travel = Math.max(0, track - thumb);
+    const top = (index / maxIndex) * travel;
+    reelScrollThumb.style.height = `${thumb}px`;
+    reelScrollThumb.style.top = `${top}px`;
+    reelScroll.setAttribute("aria-valuenow", String(index));
+    reelScroll.setAttribute("aria-valuemax", String(maxIndex));
+  };
+
+  const clearAnim = () => {
+    reelLine.classList.remove("is-out-forward", "is-in-forward", "is-out-back", "is-in-back");
+  };
+
+  const showAt = (nextIndex, { animate = false, direction = 0 } = {}) => {
+    const clamped = Math.max(0, Math.min(maxIndex, nextIndex));
+    if (clamped === index && reelLine.textContent) {
+      syncScroll();
+      return;
+    }
+    if (animate && !reduced && animating) return;
+
+    const goingBack = direction < 0 || (direction === 0 && clamped < index);
+    index = clamped;
+    syncScroll();
+
+    if (!animate || reduced) {
+      clearAnim();
       showReelLine(prompts[index]);
       return;
     }
-    if (reelLine.classList.contains("is-out")) return;
-    reelLine.classList.remove("is-in");
-    reelLine.classList.add("is-out");
+
+    animating = true;
+    const target = index;
+    const outClass = goingBack ? "is-out-back" : "is-out-forward";
+    const inClass = goingBack ? "is-in-back" : "is-in-forward";
+    const outName = goingBack ? "reel-out-back" : "reel-out-forward";
+    clearAnim();
+    reelLine.classList.add(outClass);
     reelLine.addEventListener("animationend", function done(event) {
-      if (event.animationName !== "reel-out") return;
+      if (event.animationName !== outName) return;
       reelLine.removeEventListener("animationend", done);
-      index = (index + 1) % prompts.length;
-      showReelLine(prompts[index]);
-      reelLine.classList.remove("is-out");
-      reelLine.classList.add("is-in");
+      showReelLine(prompts[target]);
+      clearAnim();
+      reelLine.classList.add(inClass);
+      animating = false;
     });
+  };
+
+  const indexFromClientY = (clientY) => {
+    const rect = reelScrollTrack.getBoundingClientRect();
+    const thumb = Math.max(18, rect.height / prompts.length);
+    const travel = Math.max(1, rect.height - thumb);
+    const y = clientY - rect.top - thumb / 2;
+    const ratio = Math.max(0, Math.min(1, y / travel));
+    return Math.round(ratio * maxIndex);
+  };
+
+  const goToCurrent = () => jumpToGraph(entries[index]);
+
+  reelLine.addEventListener("click", goToCurrent);
+  reelLine.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    goToCurrent();
+  });
+
+  showReelLine(prompts[0]);
+  if (reelScroll) {
+    if (maxIndex < 1) {
+      reelScroll.hidden = true;
+    } else {
+      reelScroll.hidden = false;
+      syncScroll();
+      window.addEventListener("resize", syncScroll);
+
+      const onPointerMove = (event) => {
+        if (!scrubbing) return;
+        showAt(indexFromClientY(event.clientY), { animate: false });
+      };
+      const onPointerUp = () => {
+        if (!scrubbing) return;
+        scrubbing = false;
+        window.removeEventListener("pointermove", onPointerMove);
+        window.removeEventListener("pointerup", onPointerUp);
+      };
+
+      reelScrollThumb.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        scrubbing = true;
+        reelScrollThumb.setPointerCapture?.(event.pointerId);
+        showAt(indexFromClientY(event.clientY), { animate: false });
+        window.addEventListener("pointermove", onPointerMove);
+        window.addEventListener("pointerup", onPointerUp);
+      });
+
+      reelScrollTrack.addEventListener("pointerdown", (event) => {
+        if (event.target === reelScrollThumb) return;
+        const next = indexFromClientY(event.clientY);
+        showAt(next, {
+          animate: true,
+          direction: next < index ? -1 : 1,
+        });
+      });
+    }
+  }
+
+  if (reelWindow && maxIndex >= 1) {
+    reelWindow.addEventListener(
+      "wheel",
+      (event) => {
+        event.preventDefault();
+        const delta = event.deltaY === 0 ? event.deltaX : event.deltaY;
+        if (!delta) return;
+        const step = delta > 0 ? 1 : -1;
+        showAt(index + step, { animate: !reduced, direction: step });
+      },
+      { passive: false }
+    );
+  }
+
+  if (prompts.length < 2) return;
+
+  window.setInterval(() => {
+    if (scrubbing || animating) return;
+    showAt((index + 1) % prompts.length, { animate: !reduced, direction: 1 });
   }, 2400);
 }
 
@@ -379,6 +567,8 @@ async function main() {
   const data = await response.json();
   state.graphs = Array.isArray(data.graphs) ? data.graphs : [];
   state.share = shareParam();
+  const requestedUser = userParam();
+  if (requestedUser) state.author = resolveAuthor(state.graphs, requestedUser);
   if (state.share) {
     document.body.classList.add("is-share");
     const brand = document.querySelector(".brand");
@@ -388,6 +578,7 @@ async function main() {
   }
   renderChips(state.graphs);
   renderGrid();
+  updateAverageMinutes(state.graphs);
   if (!state.share) startReel(state.graphs);
 
   const id = location.hash.replace("#", "");

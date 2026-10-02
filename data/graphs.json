@@ -189,6 +189,42 @@
       "minutes": 4,
       "url": "https://www.desmos.com/calculator/apmwepbjj9",
       "followups": []
+    },
+    {
+      "id": "black-hole-2d",
+      "title": "Black hole 2D",
+      "prompt": "Draggable black hole that bends light and drag it around to warp a grid of lightt rays in real-timeee",
+      "author": "Amrithanshu",
+      "minutes": 2,
+      "url": "https://www.desmos.com/calculator/ncdutxldsv",
+      "followups": []
+    },
+    {
+      "id": "hex-game",
+      "title": "Hex Game",
+      "prompt": "create game of hex, standard rules, 13x13",
+      "author": "Bhavik Dodda",
+      "minutes": 5,
+      "url": "https://www.desmos.com/calculator/zdup71xybn",
+      "followups": ["add a boundary along the edge of board red/blue"]
+    },
+    {
+      "id": "quadruple-pendulum",
+      "title": "Quadruple pendulum",
+      "prompt": "put a quadruple pendulum where you can change length, mass and g for everything. maybe something like a tiny-change button, for example, if you change by 0.001 deg, how does the motion look afterward? and the difference should be visible as before vs after.",
+      "author": "Sugam",
+      "minutes": 3,
+      "url": "https://www.desmos.com/calculator/ati9bk4wnh",
+      "followups": []
+    },
+    {
+      "id": "barchistocrone",
+      "title": "Barchistocrone",
+      "prompt": "Barchistocrone problem",
+      "author": "Vaibhav",
+      "minutes": 2,
+      "url": "https://www.desmos.com/calculator/rbhzgmktv2",
+      "followups": []
     }
   ]
 }

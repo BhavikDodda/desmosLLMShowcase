@@ -29,12 +29,32 @@
         <div class="hero-row">
           <p class="lede" id="lede">
             Each card is a playable Desmos graph built from a short prompt. A usual
-            run is <mark>1 try</mark> and about <mark>2 minutes</mark>, and it's done!<br><br> Send a prompt and it can be the next card.
+            run is <mark>1 try</mark> and about <mark id="avg-minutes">2 minutes</mark>, and it's done!<br><br> Send a prompt and it can be the next card.
           </p>
           <div class="reel" aria-live="polite">
             <p class="reel-label">prompts</p>
-            <div class="reel-window">
-              <p class="reel-line" id="reel-line"></p>
+            <div class="reel-shell">
+              <div class="reel-window" id="reel-window">
+                <p class="reel-line" id="reel-line"></p>
+              </div>
+              <div
+                class="reel-scroll"
+                id="reel-scroll"
+                role="scrollbar"
+                aria-controls="reel-line"
+                aria-orientation="vertical"
+                aria-valuemin="0"
+                hidden
+              >
+                <div class="reel-scroll-track" id="reel-scroll-track">
+                  <button
+                    type="button"
+                    class="reel-scroll-thumb"
+                    id="reel-scroll-thumb"
+                    aria-label="Scroll prompts"
+                  ></button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
