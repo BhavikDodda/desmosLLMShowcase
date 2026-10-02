@@ -298,6 +298,16 @@
       "minutes": 3,
       "url": "https://www.desmos.com/calculator/35hu8yac7v",
       "followups": []
+    },
+    {
+      "id": "bharatanatyam-mudras",
+      "title": "Bharatanatyam mudras",
+      "prompt": "Make Bharatnatyam one hand Mudras",
+      "promptImage": "images/mudra.jpeg",
+      "author": "Kashish Talati",
+      "minutes": 7,
+      "url": "https://www.desmos.com/calculator/ya6uhtalgm",
+      "followups": ["add a thin outline to the fingers so that they are visible while they are folding into the hand"]
     }
   ]
 }
