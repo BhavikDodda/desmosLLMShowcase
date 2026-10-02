@@ -251,12 +251,23 @@ function renderGrid() {
       });
       actions.append(share);
     }
-    const open = document.createElement("button");
-    open.type = "button";
-    open.className = "ghost";
-    open.textContent = desmosEmbed(graph.url) ? "Open graph" : "Details";
-    open.addEventListener("click", () => openGraph(graph));
-    actions.append(open);
+    const openUrl = desmosOpen(graph.url);
+    if (openUrl) {
+      const open = document.createElement("a");
+      open.className = "ghost";
+      open.href = openUrl;
+      open.target = "_blank";
+      open.rel = "noopener noreferrer";
+      open.textContent = "Open graph";
+      actions.append(open);
+    } else {
+      const open = document.createElement("button");
+      open.type = "button";
+      open.className = "ghost";
+      open.textContent = "Details";
+      open.addEventListener("click", () => openGraph(graph));
+      actions.append(open);
+    }
     top.append(indexLabel, actions);
 
     body.append(top, title);
