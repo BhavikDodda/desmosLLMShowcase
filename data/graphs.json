@@ -219,7 +219,7 @@
     },
     {
       "id": "barchistocrone",
-      "title": "Barchistocrone",
+      "title": " brachistochrone",
       "prompt": "Barchistocrone problem",
       "author": "Vaibhav",
       "minutes": 2,
@@ -234,6 +234,69 @@
       "author": "Adarsh",
       "minutes": 5,
       "url": "https://www.desmos.com/calculator/ldscuuq7wq",
+      "followups": []
+    },
+    {
+      "id": "bayes-theorem",
+      "title": "Bayes theorem",
+      "prompt": "bayes theorem visualization",
+      "author": "Ansh",
+      "minutes": 1,
+      "url": "https://www.desmos.com/calculator/rrpw3zokh5",
+      "followups": []
+    },
+    {
+      "id": "gravitational-slingshot",
+      "title": "Gravitational slingshot",
+      "prompt": "Gravitational slingshot in mars orbiter mission of isro",
+      "author": "Vaibhav",
+      "minutes": 2,
+      "url": "https://www.desmos.com/calculator/jr6zb6p0yn",
+      "followups": []
+    },
+    {
+      "id": "selfie-portrait",
+      "title": "Selfie Portrait",
+      "prompt": "triangulate this picture and make it",
+      "author": "Bhavik Dodda",
+      "minutes": 3,
+      "url": "https://www.desmos.com/calculator/q4q9fimxfd",
+      "followups": []
+    },
+    {
+      "id": "geometry-dash",
+      "title": "Geometry Dash",
+      "prompt": "geometry dash game, first/basic level",
+      "author": "Bhavik Dodda",
+      "minutes": 6,
+      "url": "https://www.desmos.com/calculator/xjetfbyyau",
+      "followups": []
+    },
+    {
+      "id": "pac-man-maze-search",
+      "title": "Pac Man Maze Search",
+      "prompt": "Create an interactive Pac-Man maze with a start and a goal position and visualize the paths found by different traversal methods i.e. dfs, bfs, greedy best first search and A* using different colors (use a legend for each visualization). Show the explored nodes and final path for each algorithm. Compare the four methods and state which traversal method provides the most optimal(shortest) path for the maze.",
+      "author": "Foram Gandhi",
+      "minutes": 9,
+      "url": "https://www.desmos.com/calculator/ee4drazgkv",
+      "followups": []
+    },
+    {
+      "id": "derivative",
+      "title": "Derivative",
+      "prompt": "Derivative visualization of multiple func",
+      "author": "Ansh",
+      "minutes": 0.5,
+      "url": "https://www.desmos.com/calculator/omvs2qtqty",
+      "followups": []
+    },
+    {
+      "id": "vanishing-gradient",
+      "title": "Vanishing gradient",
+      "prompt": "vanishing gradient problem in deep neural networks",
+      "author": "Foram Gandhi",
+      "minutes": 3,
+      "url": "https://www.desmos.com/calculator/35hu8yac7v",
       "followups": []
     }
   ]
