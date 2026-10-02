@@ -44,6 +44,26 @@ function promptOf(graph) {
   return graph.prompt || "";
 }
 
+function promptImageOf(graph) {
+  const raw = String(graph.promptImage || "").trim();
+  if (!raw) return "";
+  if (/^https?:\/\//i.test(raw)) return raw;
+  return raw.replace(/^\.\//, "");
+}
+
+function appendPromptImage(parent, graph) {
+  const src = promptImageOf(graph);
+  if (!src || !parent) return;
+  const figure = document.createElement("figure");
+  figure.className = "prompt-image";
+  const img = document.createElement("img");
+  img.src = src;
+  img.alt = `Reference for “${promptOf(graph)}”`;
+  img.loading = "lazy";
+  figure.append(img);
+  parent.append(figure);
+}
+
 function minutesOf(graph) {
   const n = Number(graph.minutes);
   return Number.isFinite(n) ? n : 2;
@@ -257,6 +277,7 @@ function renderGrid() {
     prompt.className = "prompt";
     prompt.textContent = quotedPrompt(graph);
     promptWrap.append(promptTag, prompt);
+    appendPromptImage(promptWrap, graph);
 
     const meta = document.createElement("p");
     meta.className = "meta";
@@ -312,7 +333,7 @@ function renderGrid() {
     top.append(indexLabel, actions);
 
     body.append(top, title);
-    if (promptOf(graph)) body.append(promptWrap);
+    if (promptOf(graph) || promptImageOf(graph)) body.append(promptWrap);
     const later = followupTimeline(graph);
     if (later) body.append(later);
     body.append(meta);

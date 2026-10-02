@@ -1,5 +1,5 @@
 {
-  "_edit": "This file is the whole gallery. Reorder objects to reorder cards. title is the graph name. prompt is the first prompt, the full idea, in the user's exact words. followups is later prompts that improved it, in order — leave [] when it shipped on the first prompt. author is who wrote the prompt. minutes is generation time. url is https://www.desmos.com/calculator/HASH — leave it empty until you have one. The card then shows https://saved-work.desmos.com/calc_thumbs/production/HASH.png and an Open link button.",
+  "_edit": "This file is the whole gallery. Reorder objects to reorder cards. title is the graph name. prompt is the first prompt, the full idea, in the user's exact words. promptImage is optional — a path under site/ relative to the site root (e.g. images/my-ref.png). Put the file in site/images/. followups is later prompts that improved it, in order — leave [] when it shipped on the first prompt. author is who wrote the prompt. minutes is generation time. url is https://www.desmos.com/calculator/HASH — leave it empty until you have one. The card then shows https://saved-work.desmos.com/calc_thumbs/production/HASH.png and an Open link button.",
   "graphs": [
     {
       "id": "elliptical-billiards",
@@ -224,6 +224,16 @@
       "author": "Vaibhav",
       "minutes": 2,
       "url": "https://www.desmos.com/calculator/rbhzgmktv2",
+      "followups": []
+    },
+    {
+      "id": "cantilevered-brick-tower",
+      "title": "Cantilevered brick tower",
+      "prompt": "create this img",
+      "promptImage": "images/adarsh-input.jpg",
+      "author": "Adarsh",
+      "minutes": 5,
+      "url": "https://www.desmos.com/calculator/ldscuuq7wq",
       "followups": []
     }
   ]
