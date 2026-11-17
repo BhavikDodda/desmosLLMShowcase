@@ -317,6 +317,15 @@
       "minutes": 10,
       "url": "https://www.desmos.com/calculator/tydt4oyowb",
       "followups": []
+    },
+    {
+      "id": "juggle-tennis-ball",
+      "title": "juggle tennis ball",
+      "prompt": "Juggling 4 tennis balls",
+      "author": "Sri",
+      "minutes": 5,
+      "url": "https://www.desmos.com/calculator/gcvcouebvn",
+      "followups": []
     }
   ]
 }
